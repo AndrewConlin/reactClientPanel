@@ -9,6 +9,11 @@ import AddClient from './components/clients/AddClient';
 import EditClient from './components/clients/EditClient';
 import ClientDetails from './components/clients/ClientDetails';
 import NotFound from './components/layout/NotFound';
+import Login from './components/auth/Login';
+import Register from './components/auth/Register';
+import Settings from './components/settings/Settings';
+
+import { UserIsAuthenticated, UserIsNotAuthenticated } from './helpers/Auth';
 
 import './App.css';
 
@@ -21,10 +26,13 @@ class App extends Component {
             <AppNavbar />
             <div className="container">
               <Switch>
-                <Route exact path="/" component={Dashboard} />
-                <Route exact path="/client/add" component={AddClient} />
-                <Route exact path="/client/edit/:id" component={EditClient} />
-                <Route exact path="/client/:id" component={ClientDetails} />
+                <Route exact path="/" component={UserIsAuthenticated(Dashboard)} />
+                <Route exact path="/login" component={UserIsNotAuthenticated(Login)} />
+                <Route exact path="/register" component={UserIsNotAuthenticated(Register)} />
+                <Route exact path="/client/add" component={UserIsAuthenticated(AddClient)} />
+                <Route exact path="/client/edit/:id" component={UserIsAuthenticated(EditClient)} />
+                <Route exact path="/client/:id" component={UserIsAuthenticated(ClientDetails)} />
+                <Route exact path="/settings" component={UserIsAuthenticated(Settings)} />
                 <Route component={NotFound} />
               </Switch>
             </div>
